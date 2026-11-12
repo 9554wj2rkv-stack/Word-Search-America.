@@ -576,6 +576,7 @@ body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!impor
   .cat-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
   .adventure-wrap{max-width:560px;margin:0 auto}
 }
+.legal-copy h4{font-size:18px;margin:18px 0 7px}.legal-copy p{line-height:1.5;font-size:16px}.legal-copy a{color:#174c96;text-decoration:underline;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -2872,7 +2873,9 @@ const UI = {
       <div class="set-row"><div><div class="lb">Animations</div><div class="ds">Bursts, score pop-ups and celebrations</div></div>${sw('animations', s.animations)}</div>
       <div class="set-row" style="display:block"><div class="lb">Theme</div><div class="ds" style="margin-bottom:8px">Earn new looks by reaching goals</div><div class="themes">${themes}</div></div>
       <div class="set-row"><div><div class="lb">Reset progress</div><div class="ds">Clears level, stars, streaks, scores and achievements</div></div>
-        <button class="btn btn-red btn-sm" data-action="reset-progress">RESET</button></div>`;
+        <button class="btn btn-red btn-sm" data-action="reset-progress">RESET</button></div>
+      <div class="set-row"><div><div class="lb">Privacy Policy</div><div class="ds">How your game data is handled</div></div><button class="btn btn-outline btn-sm" data-action="open-privacy">READ</button></div>
+      <div class="set-row"><div><div class="lb">Support</div><div class="ds">Get help or report a problem</div></div><button class="btn btn-outline btn-sm" data-action="open-support">HELP</button></div>`;
     $('storageNote').textContent = Storage.available
       ? 'Progress is saved in this browser on this device.'
       : 'This browser is blocking storage, so progress lasts only until you close this tab.';
@@ -3399,6 +3402,30 @@ const Actions = {
   'categories': () => UI.show('categories'),
   'progress': () => UI.show('progress'),
   'open-settings': () => UI.show('settings'),
+  'open-privacy': () => UI.modal({
+    title: 'Privacy Policy',
+    html: `<div class="legal-copy">
+      <p><strong>Word Search America · North Spark 21</strong><br>Last updated: 12 November 2026</p>
+      <h4>Game data on your device</h4><p>The game stores scores, completed puzzles, achievements, daily streaks and preferences locally on your device. This version does not send this game data to us and does not include accounts, advertising or analytics services.</p>
+      <h4>Sharing and tracking</h4><p>We do not sell your game data or share it with advertisers. This version does not include tracking tools. If you play through a website, its hosting provider may process ordinary connection information to deliver the page; this policy describes the game itself.</p>
+      <h4>Keeping and deleting data</h4><p>Local progress remains until it is reset or the device’s stored app or browser data is cleared. Settings → Reset progress clears your game progress while keeping your sound and animation preferences. To remove all stored game data, clear this game’s browser data or delete the app and its data using your device settings. Device backups may retain copies according to your backup settings. We cannot access or restore your local progress.</p>
+      <h4>Contacting support</h4><p>If you email us, we receive your email address and anything you choose to include. We use this information to respond and resolve your request. Email is handled by our email provider. We keep support correspondence only as long as needed for the request or applicable recordkeeping obligations. You can contact us to request deletion of support correspondence or ask about your information.</p>
+      <h4>Children</h4><p>The game does not request personal information from players. Please avoid sending personal information about children in support requests.</p>
+      <h4>Changes and contact</h4><p>If the game’s data practices change, this policy will be updated.<br>Privacy questions: <a href="mailto:northspark21@mail.com">northspark21@mail.com</a></p>
+    </div>`,
+    actions: [{ label: 'Back to Settings', cls: 'btn-blue', value: true }]
+  }),
+  'open-support': () => UI.modal({
+    title: 'Help & Support',
+    html: `<div class="legal-copy"><p><strong>Word Search America</strong><br>By North Spark 21</p>
+      <h4>Need help or found a problem?</h4><p>Email <a href="mailto:northspark21@mail.com?subject=Word%20Search%20America%20Support">northspark21@mail.com</a>. Your email app will open so you can review and send your message.</p>
+      <p>Tell us what happened, which screen or puzzle you were using, and your device model. A screenshot can help. Please do not send passwords or payment details.</p>
+      <h4>Your progress</h4><p>Progress is saved locally on this device when storage is available. It does not automatically transfer to another device. Clearing stored data can remove your progress.</p>
+      <h4>Sound and animations</h4><p>You can turn sound and animations on or off in Settings.</p>
+      <h4>Starting again</h4><p>Settings → Reset progress lets you start over after confirmation. This cannot be undone.</p>
+      <p>If no email app opens, copy or type this address into your preferred email service:<br><strong style="overflow-wrap:anywhere">northspark21@mail.com</strong></p></div>`,
+    actions: [{ label: 'Back to Settings', cls: 'btn-blue', value: true }]
+  }),
   'open-level': b => UI.levelSheet(+b.dataset.ci, +b.dataset.li),
   'jump-group': b => { const el = $('grp-' + b.dataset.g); if (el && el.scrollIntoView) el.scrollIntoView({ behavior: UI.anim() ? 'smooth' : 'auto', block: 'start' }); },
   'pick-source': b => { UI.pendingSource = b.dataset.src; UI.show('difficulty'); },
